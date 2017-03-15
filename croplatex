@@ -1,7 +1,14 @@
 #! /bin/bash
 ## For making batches of diagrams
-## Runs LaTeX*2->dvips->ps2pdf then crops the resulting file, opens it, and then tidies up
+## Creates a folder 'diagrams' if it doesn't exist.
+## Runs LaTeX*2->dvips->ps2pdf then crops the resulting files opens them, then moves them to the diagrams folder.
+## Also tidies up after itself.
 ## Works whether you give it a TeX file with or without the extension.
+
+if [ ! -d ./diagrams ]
+then
+  mkdir diagrams
+fi
 
 for filename in "$@"
 do
@@ -18,8 +25,8 @@ do
   ps2pdf "$basename.ps"
 
   pdfcrop --margins 2 "$basename.pdf"
-
-  open "$basename-crop.pdf"
+  mv "$basename-crop.pdf" diagrams/
+  open "diagrams/$basename-crop.pdf"
 
   rm $basename.dvi $basename.ps $basename.pdf
 done
