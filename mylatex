@@ -1,0 +1,6 @@
+#! /bin/bash
+## Runs latexmk to produce and display a pdf which watches for changes.
+## When the user stops watching, it then cleans up.
+
+latexmk -pdf -pvc "$1"
+latexmk -c
