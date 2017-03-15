@@ -1,7 +1,7 @@
 #! /bin/bash
 ## For making batches of diagrams
 ## Creates a folder 'diagrams' if it doesn't exist.
-## Runs LaTeX*2->dvips->ps2pdf then crops the resulting files opens them, then moves them to the diagrams folder.
+## Runs LaTeX*2->dvips->ps2pdf then crops the resulting files, moves them to the diagrams folder, then opens them for verification (easy to remove this line if you don't want to see them).
 ## Also tidies up after itself.
 ## Works whether you give it a TeX file with or without the extension.
 
