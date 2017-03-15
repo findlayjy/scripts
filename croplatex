@@ -1,0 +1,34 @@
+#! /bin/bash
+## For making batches of diagrams
+## Runs LaTeX*2->dvips->ps2pdf then crops the resulting file, opens it, and then tidies up
+## Works whether you give it a TeX file with or without the extension.
+
+for filename in "$@"
+do
+  if [[ $filename == *.tex ]]
+  then
+    basename=${filename/.tex/}
+  else
+    basename=$filename
+  fi
+  echo $basename
+  latex "$basename"
+  latex "$basename"
+  dvips "$basename"
+  ps2pdf "$basename.ps"
+
+  pdfcrop --margins 2 "$basename.pdf"
+
+  open "$basename-crop.pdf"
+
+  rm $basename.dvi $basename.ps $basename.pdf
+done
+
+latexmk -c
+
+## Some of my tree-drawing packages create a pst-tree.aux file.
+## This removes it if it exists.
+if [ -f "pst-tree.aux" ]
+then
+  rm "pst-tree.aux"
+fi
