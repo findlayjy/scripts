@@ -1,5 +1,5 @@
 #! /bin/bash
-## Runs LaTeX->BibTeX->LaTeX*2->dvips->ps2pdf then opens the resulting PDF and tidies up
+## Runs LaTeX->BibTeX->LaTeX*2->dvips->ps2pdf then opens the resulting PDF and tidies up with latexmk (https://www.ctan.org/pkg/latexmk/?lang=en).
 ## Works whether you give it a TeX file with or without the extension.
 
 if [[ "$1" == *.tex ]]
