@@ -1,5 +1,6 @@
 #! /bin/bash
-## For making batches of diagrams
+## For making batches of diagrams.
+## Usage: croplatex filename1 filename2 ...
 ## Creates a folder 'diagrams' if it doesn't exist.
 ## Runs LaTeX*2->dvips->ps2pdf then crops the resulting files and moves them to the diagrams folder.
 ## Then opens them for verification -- easy to remove this line if you don't want to see them all.
