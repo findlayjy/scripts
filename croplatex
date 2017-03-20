@@ -26,8 +26,8 @@ do
   ps2pdf "$basename.ps"
 
   pdfcrop --margins 2 "$basename.pdf"
-  mv "$basename-crop.pdf" diagrams/
-  open "diagrams/$basename-crop.pdf"
+  mv "$basename-crop.pdf" "diagrams/$basename.pdf"
+  open "diagrams/$basename.pdf"
 
   rm $basename.dvi $basename.ps $basename.pdf
 done
