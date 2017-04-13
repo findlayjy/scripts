@@ -1,9 +1,10 @@
 #! /bin/bash
 ## Usage: newlatex filename
-## Creates a ready-to-use LaTeX file with my default template. Replace the value of TEXT with your desired content.
-## If no filename is given, produces new.tex
+## Creates and opens a ready-to-use LaTeX file with my default template.
+## Replace the value of $text with your desired content.
+## If no filename is given, produces 'new.tex'
 
-TEXT="%===========================================%
+text="%===========================================%
 %===========================================%
 %	Template for linguistics articles       %
 %===========================================%
@@ -166,9 +167,11 @@ done
 ## If making a blank file, calls it 'new'; if there's already a file called 'new', adds bracketed numbers after to differentiate (so you won't overwrite your blank file if you make another one).
 if [[ "$filename" == "new" ]]; then
   if [[ -f "new.tex" ]]; then
-    echo "$TEXT" > "$filename($filenumber).tex"
+    echo "$text" > "$filename($filenumber).tex"
+		open "$filename($filenumber).tex"
   else
-    echo "$TEXT" > "$filename.tex"
+    echo "$text" > "$filename.tex"
+		open "$filename.tex"
   fi
 ## Checks if your filename is in use -- returns error if so, otherwise makes it.
 else
@@ -176,6 +179,7 @@ else
   then
     echo "Error: file already exists!"
   else
-    echo "$TEXT" > "$filename.tex"
+    echo "$text" > "$filename.tex"
+		open "$filename.tex"
   fi
 fi
