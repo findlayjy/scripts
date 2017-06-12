@@ -32,7 +32,8 @@ do
   # open "diagrams/$basename.pdf"
   open "$basename.pdf"
 
-  rm $basename.dvi $basename.ps $basename.pdf
+  # rm $basename.dvi $basename.ps $basename.pdf
+  rm $basename.dvi $basename.ps
 done
 
 latexmk -c
