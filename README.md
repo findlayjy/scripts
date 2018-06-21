@@ -3,7 +3,7 @@ This is a collection of `bash` scripts I use. So far, they all relate to speedin
 
 * `csv2latex` is a find and replace script which turns csv files into LaTeX markup.
 
-* `croplatex` takes TeX files as its argument, then compiles them and crops the results using `pdfcrop`. Good for making diagrams.
+* `croplatex` takes `.tex` files as its argument, then compiles them and crops the results using `pdfcrop`. Good for making diagrams.
 
 * `longlatex` just runs a bunch of LaTeX commands (`LaTeX`->`BibTeX`->`LaTeX`x2->`dvips`->`ps2pdf`) and cleans up after itself. This should resolve all cross-references and bibliographical issues, as well as allowing for processing of figures or other items which require `pstricks` or other PostScript tools (and so can't be got using just `pdflatex`).
 
