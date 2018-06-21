@@ -1,10 +1,15 @@
 #! /bin/bash
-## Usage: newlatex filename
-## Creates and opens a ready-to-use LaTeX file with basic structure (good for testing things out)
+## Usage: newhandout (filename)
+## Creates and opens a ready-to-use LaTeX file with my default handout template.
 ## Replace the value of $text with your desired content.
 ## If no filename is given, produces 'new.tex'
 
-text="
+text="%===========================================%
+%===========================================%
+%	Template for linguistics articles       %
+%===========================================%
+%===========================================%
+
 \documentclass[12pt, a4]{article}
 
 %===================%
@@ -16,7 +21,33 @@ text="
 \usepackage[T1]{fontenc}		% For more font encoding options
 \usepackage{lmodern}		% For better quality fonts
 
+%\usepackage{garamond}	% For garamond -- activate \garamond below to convert whole text;
+						% otherwise use \garamond and \ungaramond.
+
+% \usepackage{times}		% Times font
+
+\usepackage[sc,osf]{mathpazo}% Palatino font, w/ smallcaps & old-style figures
+
+%\usepackage{tipa}			% IPA font
+
+%\usepackage{pifont}		% Dingbats incudes OT pointing hand: \ding{43}
+
+%\usepackage[normalem]{ulem}	% Without the option, \emph{...} = underlining not italics
+							% Underline: \uline{...}.
+							% Double underline: \uuline{...}
+							% Dashed underline: \dashuline{...}
+							% Dotted underline: \dotuline{...}
+							% For strikeout: cmd = \sout{...}
+							% To add a wavy underline, use \uwave{...}.
+							% For a strike-out (strikethrough), use \sout{...}.
+							% For a slash through each individual character \xout{...}.
+
 %\usepackage{lipsum}	% \lipsum command generates sample text
+
+\renewenvironment{quote}
+               {\list{}{\rightmargin\leftmargin}%
+                \item\relax\small}
+               {\endlist}
 
 %===================%
 %	Maths stuff		%
@@ -42,13 +73,28 @@ text="
 
 \usepackage{booktabs}	% Better quality tables. Commands: \toprule, \midrule, \cmidrule, \bottomrule
 
-%\usepackage[a4paper]{geometry}	% Add lmargin, rmargin, tmargin, bmargin in options to control margins
+\usepackage[font=small, labelfont=bf]{caption}	% Caption formatting
+
+%\usepackage{fullpage}			% Shrinks margins
+\usepackage[a4paper,margin=1in]{geometry}	% Add lmargin, rmargin, tmargin, bmargin in options to control margins
+
+%\usepackage{rotating}	% Rotates boxes (inc. floats)
+%\usepackage{lscape}	% Rotates whole pages w/out page numbers. 'pdflscape' to rotate pdf too
+
+%\usepackage{setspace}	%
 
 %============================%
 %	Graphics and diagrams	 %
 %============================%
 
 \usepackage{graphicx}
+%\graphicspath{{figures/}}
+
+\usepackage{pstricks}
+
+\usepackage{mary-trees}
+
+%\usepackage[round, medium]{OTtablx}		%For OT tableaux.
 
 %========================%
 %	Bibliography info	 %
@@ -63,6 +109,10 @@ text="
 %	Linguistics specific stuff	 %
 %================================%
 
+\input{abbrevs}
+\usepackage{ling-packages-bundle}
+%\avmvalfont{\rm}				% sets default AVM value font to regular text
+
 \usepackage{linguex}					% Example numbering and glossing
 \let\eachwordtwo=\it						% Italicises second line of gloss
 \renewcommand{\firstrefdash}{}				% Suppresses hyphen between ex. no. and sub-ex. letter
@@ -72,14 +122,16 @@ text="
 %================================%
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%
 %	Title info       %
 %%%%%%%%%%%%%%%%%%%%%%
 
-\title{}
-\author{}
+\title{Title\thanks{Acknowledgements}}
+\author{Jamie Y. Findlay \\\ \href{mailto:jamie.findlay@ling-phil.ox.ac.uk}{\tt jamie.findlay@ling-phil.ox.ac.uk}}
+\date{Conference name\\\Location\\\Date}
 %\date{}
 
 %%%%%%%%%%%%%%%%%%%%%%%
@@ -87,8 +139,18 @@ text="
 %%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
-
+\frenchspacing
 \maketitle
+
+\section{Section name}
+
+
+\begin{itemize}
+
+\item First item
+
+\end{itemize}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%
@@ -96,11 +158,11 @@ text="
 %%%%%%%%%%%%%%%%%%%%%
 
 %\renewcommand\refname{NAME}		%Change the name of the bibliography
-%\bibliographystyle{sp}				% Semantics & Pragmatics bibliography style
-%\bibliography{}
+\bibliographystyle{sp}				% Semantics & Pragmatics bibliography style
+\bibliography{linguistics}
 
-
-\end{document}"
+\end{document}
+"
 
 filenumber=1
 

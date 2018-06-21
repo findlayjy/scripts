@@ -1,16 +1,10 @@
 #! /bin/bash
 ## For making batches of diagrams.
-## Usage: croplatex filename1 filename2 ...
-## Creates a folder 'diagrams' if it doesn't exist.
-## Runs LaTeX*2->dvips->ps2pdf then crops the resulting files and moves them to the diagrams folder.
+## Usage: croplatex filename1 (filename2 ...)
+## Runs LaTeX*2->dvips->ps2pdf then crops the resulting files and moves them up a level -- intended to be used in e.g. a 'source files' folder.
 ## Then opens them for verification -- easy to remove this line if you don't want to see them all.
 ## Also tidies up after itself.
 ## Works whether you give it a TeX file with or without the extension.
-
-# if [ ! -d ./diagrams ]
-# then
-#   mkdir diagrams
-# fi
 
 for filename in "$@"
 do
@@ -27,13 +21,10 @@ do
   ps2pdf "$basename.ps"
 
   pdfcrop --margins 2 "$basename.pdf"
-  # mv "$basename-crop.pdf" "diagrams/$basename.pdf"
-  mv "$basename-crop.pdf" "$basename.pdf"
-  # open "diagrams/$basename.pdf"
-  open "$basename.pdf"
+  mv "$basename-crop.pdf" "../$basename.pdf"
+  open "../$basename.pdf"
 
-  # rm $basename.dvi $basename.ps $basename.pdf
-  rm $basename.dvi $basename.ps
+  rm $basename.dvi $basename.ps $basename.pdf
 done
 
 latexmk -c
