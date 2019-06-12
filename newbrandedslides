@@ -1,0 +1,41 @@
+#! /bin/bash
+## Usage: newbrandedslides (filename)
+## Creates and opens a ready-to-use LaTeX file with a 'branded' slides template (when I want to represent the university).
+## Replace the value of $text with your desired content.
+## If no filename is given, produces 'new-slides.tex'
+
+filenumber=1
+templatepath="/Users/jamie/dropbox/git/latex-templates/branded-presentation-template.tex"
+
+## Cleans input so user can include the .tex the extension or not.
+if [[ "$1" == *.tex ]]
+then
+  filename=${1/.tex/}
+else
+  filename=${1:-"new-slides"}
+fi
+
+## Counts how many untitled ('new') files already exist past the first.
+while [[ -f "new-slides($filenumber).tex" ]]; do
+  filenumber=$((filenumber+1))
+done
+
+## If making a blank file, calls it 'new-slides'; if there's already a file called 'new-slides', adds bracketed numbers after to differentiate (so you won't overwrite your blank file if you make another one).
+if [[ "$filename" == "new-slides" ]]; then
+  if [[ -f "new-slides.tex" ]]; then
+    cp $templatepath "$filename($filenumber).tex"
+		open "$filename($filenumber).tex"
+  else
+    cp $templatepath "$filename.tex"
+		open "$filename.tex"
+  fi
+## Checks if your filename is in use -- returns error if so, otherwise makes it.
+else
+  if [[ -f "$filename.tex" ]]
+  then
+    echo "Error: file already exists!"
+  else
+    cp $templatepath "$filename.tex"
+		open "$filename.tex"
+  fi
+fi

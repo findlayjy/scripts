@@ -1,176 +1,31 @@
 #! /bin/bash
 ## Usage: newarticle (filename)
 ## Creates and opens a ready-to-use LaTeX file with my default article template.
-## Replace the value of $text with your desired content.
-## If no filename is given, produces 'new.tex'
-
-text="%===========================================%
-%===========================================%
-%	Template for linguistics articles       %
-%===========================================%
-%===========================================%
-
-\documentclass[12pt, a4]{article}
-
-%===================%
-%	Fonts, etc.		%
-%===================%
-
-\frenchspacing				% Spacing after periods
-
-\usepackage[T1]{fontenc}		% For more font encoding options
-\usepackage{lmodern}		% For better quality fonts
-
-%\usepackage{garamond}	% For garamond -- activate \garamond below to convert whole text;
-						% otherwise use \garamond and \ungaramond.
-
-%\usepackage{times}		% Times font
-
-\usepackage[sc,osf]{mathpazo}% Palatino font, w/ smallcaps & old-style figures
-
-%\usepackage{tipa}			% IPA font
-
-%\usepackage{pifont}		% Dingbats incudes OT pointing hand: \ding{43}
-
-%\usepackage[normalem]{ulem}	% Without the option, \emph{...} = underlining not italics
-							% Underline: \uline{...}.
-							% Double underline: \uuline{...}
-							% Dashed underline: \dashuline{...}
-							% Dotted underline: \dotuline{...}
-							% For strikeout: cmd = \sout{...}
-							% To add a wavy underline, use \uwave{...}.
-							% For a strike-out (strikethrough), use \sout{...}.
-							% For a slash through each individual character \xout{...}.
-
-%\usepackage{lipsum}	% \lipsum command generates sample text
-
-%===================%
-%	Maths stuff		%
-%===================%
-
-\usepackage{amsmath}			% Default maths stuff.
-\usepackage{amssymb}			% Also loads amsfonts; \mathbb{...} for blackboard bold.
-
-%================================%
-%	Dealing with hyperlinks      %
-%================================%
-
-\usepackage[breaklinks]{hyperref}	% Allows links (email addresses and URLs)
-% Commands: 	\url{ADDRESS} -- displays ADDRESS as link in URL font
-%			\nolinkurl{ADDRESS} -- displays ADDRESS in URL font, but not as a hyperlink
-%			\href{ADDRESS}{TEXT} -- displays TEXT as a link to ADDRESS
-
-\usepackage[hyphenbreaks]{breakurl}
-
-%===============%
-%	Layout		%
-%===============%
-
-\usepackage{booktabs}	% Better quality tables. Commands: \toprule, \midrule, \cmidrule, \bottomrule
-
-\usepackage[font=small, labelfont=bf]{caption}	% Caption formatting
-
-%\usepackage{fullpage}			% Shrinks margins
-%\usepackage[a4paper]{geometry}	% Add lmargin, rmargin, tmargin, bmargin in options to control margins
-
-%\usepackage{rotating}	% Rotates boxes (inc. floats)
-%\usepackage{lscape}	% Rotates whole pages w/out page numbers. 'pdflscape' to rotate pdf too
-
-%\usepackage{setspace}	%
-
-%============================%
-%	Graphics and diagrams	 %
-%============================%
-
-\usepackage{graphicx}
-
-\usepackage{pstricks}
-
-\usepackage{mary-trees}
-
-%\usepackage[round, medium]{OTtablx}		%For OT tableaux.
-
-%========================%
-%	Bibliography info	 %
-%========================%
-
-\usepackage{natbib}		% Author-year citations
-\bibpunct{(}{)}{;}{a}{}{,}	% {opening bracket style}{closing bracket style}{punctuation between 							multiple citations}{n=numerical, s=superscript numerical, a=author								year}{punctuation btwn author and year}{punctuation between years 								with shared author}
-\setcitestyle{notesep={:\ }}	% Changes separator between year and page to colon
-%\setlength{\bibsep}{}	% Changes length between bibliography items
-
-%================================%
-%	Linguistics specific stuff	 %
-%================================%
-
-\input{abbrevs}
-\usepackage{ling-packages-bundle}
-%\avmvalfont{\rm}				% sets default AVM value font to regular text
-
-\usepackage{linguex}					% Example numbering and glossing
-\let\eachwordtwo=\it						% Italicises second line of gloss
-\renewcommand{\firstrefdash}{}				% Suppresses hyphen between ex. no. and sub-ex. letter
-
-%================================%
-%	Document-specific commands	 %
-%================================%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%
-%	Title info       %
-%%%%%%%%%%%%%%%%%%%%%%
-
-\title{Title}
-\author{Jamie Y. Findlay \\\ University of Oxford \\\ \href{mailto:jamie.findlay@ling-phil.ox.ac.uk}{\tt jamie.findlay@ling-phil.ox.ac.uk}}
-%\date{}
-
-%%%%%%%%%%%%%%%%%%%%%%%
-%	Document body     %
-%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{document}
-
-\maketitle
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%
-%	Bibliography    %
-%%%%%%%%%%%%%%%%%%%%%
-
-%\renewcommand\refname{NAME}		%Change the name of the bibliography
-\bibliographystyle{sp}				% Semantics & Pragmatics bibliography style
-\bibliography{linguistics}
-
-
-\end{document}
-"
+## If no filename is given, produces 'new-article.tex'
 
 filenumber=1
+templatepath="/Users/jamie/dropbox/git/latex-templates/article-template.tex"
 
 ## Cleans input so user can include the .tex the extension or not.
 if [[ "$1" == *.tex ]]
 then
   filename=${1/.tex/}
 else
-  filename=${1:-"new"}
+  filename=${1:-"new-article"}
 fi
 
 ## Counts how many untitled ('new') files already exist past the first.
-while [[ -f "new($filenumber).tex" ]]; do
+while [[ -f "new-article($filenumber).tex" ]]; do
   filenumber=$((filenumber+1))
 done
 
-## If making a blank file, calls it 'new'; if there's already a file called 'new', adds bracketed numbers after to differentiate (so you won't overwrite your blank file if you make another one).
-if [[ "$filename" == "new" ]]; then
-  if [[ -f "new.tex" ]]; then
-    echo "$text" > "$filename($filenumber).tex"
+## If making a blank file, calls it 'new-article'; if there's already a file called 'new-article', adds bracketed numbers after to differentiate (so you won't overwrite your blank file if you make another one).
+if [[ "$filename" == "new-article" ]]; then
+  if [[ -f "new-article.tex" ]]; then
+    cp $templatepath "$filename($filenumber).tex"
 		open "$filename($filenumber).tex"
   else
-    echo "$text" > "$filename.tex"
+    cp $templatepath "$filename.tex"
 		open "$filename.tex"
   fi
 ## Checks if your filename is in use -- returns error if so, otherwise makes it.
@@ -179,7 +34,7 @@ else
   then
     echo "Error: file already exists!"
   else
-    echo "$text" > "$filename.tex"
+    cp $templatepath "$filename.tex"
 		open "$filename.tex"
   fi
 fi
