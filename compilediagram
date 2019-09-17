@@ -1,9 +1,9 @@
 #! /bin/bash
-## Compiles and then crops diagrams
+## For making batches of diagrams.
 ## Usage: croplatex filename1 (filename2 ...)
-## Runs LaTeX*2->dvips->ps2pdf then crops the resulting files
-## Also opens them for verification -- remove line 25 if you don't want to see them all.
-## Tidies up after itself.
+## Runs LaTeX*2->dvips->ps2pdf then crops the resulting files and moves them up a level -- intended to be used in e.g. a 'source files' folder.
+## Then opens them for verification -- easy to remove this line if you don't want to see them all.
+## Also tidies up after itself.
 ## Works whether you give it a TeX file with or without the extension.
 
 for filename in "$@"
@@ -21,10 +21,10 @@ do
   ps2pdf "$basename.ps"
 
   pdfcrop --margins 2 "$basename.pdf"
-  mv "$basename-crop.pdf" "$basename.pdf"
-  open "$basename.pdf"
+  mv "$basename-crop.pdf" "../$basename.pdf"
+  open "../$basename.pdf"
 
-  rm $basename.dvi $basename.ps
+  rm $basename.dvi $basename.ps $basename.pdf
 done
 
 latexmk -c

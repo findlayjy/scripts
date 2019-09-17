@@ -1,0 +1,25 @@
+#! /bin/bash
+## Compiles and then crops diagrams
+## Usage: pdfcroplatex filename1 (filename2 ...)
+## Runs latexmk -pdf on the files
+## Then opens them for verification -- remove line 22 if you don't want to see them all.
+## Tidies up after itself.
+## Works whether you give it a TeX file with or without the extension.
+
+for filename in "$@"
+do
+  if [[ $filename == *.tex ]]
+  then
+    basename=${filename/.tex/}
+  else
+    basename=$filename
+  fi
+  echo $basename
+  latexmk -pdf "$basename.tex"
+
+  pdfcrop --margins 2 "$basename.pdf"
+  mv "$basename-crop.pdf" "$basename.pdf"
+  open "$basename.pdf"
+done
+
+latexmk -c
