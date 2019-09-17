@@ -23,3 +23,10 @@ do
 done
 
 latexmk -c
+
+## Some of my tree-drawing packages create a pst-tree.aux file.
+## This removes it if it exists.
+if [ -f "pst-tree.aux" ]
+then
+  rm "pst-tree.aux"
+fi
