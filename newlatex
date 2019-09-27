@@ -1,108 +1,10 @@
 #! /bin/bash
-## Usage: newlatex filename
-## Creates and opens a ready-to-use LaTeX file with basic structure (good for testing things out)
-## Replace the value of $text with your desired content.
+## Usage: newlatex (filename)
+## Creates and opens a ready-to-use LaTeX file with basic settings.
 ## If no filename is given, produces 'new.tex'
 
-text="
-\documentclass[12pt, a4]{article}
-
-%===================%
-%	Fonts, etc.		%
-%===================%
-
-\frenchspacing				% Spacing after periods
-
-\usepackage[T1]{fontenc}		% For more font encoding options
-\usepackage{lmodern}		% For better quality fonts
-
-%\usepackage{lipsum}	% \lipsum command generates sample text
-
-%===================%
-%	Maths stuff		%
-%===================%
-
-\usepackage{amsmath}			% Default maths stuff.
-\usepackage{amssymb}			% Also loads amsfonts; \mathbb{...} for blackboard bold.
-
-%================================%
-%	Dealing with hyperlinks      %
-%================================%
-
-\usepackage[breaklinks]{hyperref}	% Allows links (email addresses and URLs)
-% Commands: 	\url{ADDRESS} -- displays ADDRESS as link in URL font
-%			\nolinkurl{ADDRESS} -- displays ADDRESS in URL font, but not as a hyperlink
-%			\href{ADDRESS}{TEXT} -- displays TEXT as a link to ADDRESS
-
-\usepackage[hyphenbreaks]{breakurl}
-
-%===============%
-%	Layout		%
-%===============%
-
-\usepackage{booktabs}	% Better quality tables. Commands: \toprule, \midrule, \cmidrule, \bottomrule
-
-%\usepackage[a4paper]{geometry}	% Add lmargin, rmargin, tmargin, bmargin in options to control margins
-
-%============================%
-%	Graphics and diagrams	 %
-%============================%
-
-\usepackage{graphicx}
-
-%========================%
-%	Bibliography info	 %
-%========================%
-
-\usepackage{natbib}		% Author-year citations
-\bibpunct{(}{)}{;}{a}{}{,}	% {opening bracket style}{closing bracket style}{punctuation between 							multiple citations}{n=numerical, s=superscript numerical, a=author								year}{punctuation btwn author and year}{punctuation between years 								with shared author}
-\setcitestyle{notesep={:\ }}	% Changes separator between year and page to colon
-%\setlength{\bibsep}{}	% Changes length between bibliography items
-
-%================================%
-%	Linguistics specific stuff	 %
-%================================%
-
-\usepackage{linguex}					% Example numbering and glossing
-\let\eachwordtwo=\it						% Italicises second line of gloss
-\renewcommand{\firstrefdash}{}				% Suppresses hyphen between ex. no. and sub-ex. letter
-
-%================================%
-%	Document-specific commands	 %
-%================================%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%
-%	Title info       %
-%%%%%%%%%%%%%%%%%%%%%%
-
-\title{}
-\author{}
-%\date{}
-
-%%%%%%%%%%%%%%%%%%%%%%%
-%	Document body     %
-%%%%%%%%%%%%%%%%%%%%%%%
-
-\begin{document}
-
-\maketitle
-
-
-%%%%%%%%%%%%%%%%%%%%%
-%	Bibliography    %
-%%%%%%%%%%%%%%%%%%%%%
-
-%\renewcommand\refname{NAME}		%Change the name of the bibliography
-%\bibliographystyle{sp}				% Semantics & Pragmatics bibliography style
-%\bibliography{}
-
-
-\end{document}"
-
 filenumber=1
+templatepath="/Users/jamie/dropbox/git/latex-templates/blank-template.tex"
 
 ## Cleans input so user can include the .tex the extension or not.
 if [[ "$1" == *.tex ]]
@@ -117,13 +19,13 @@ while [[ -f "new($filenumber).tex" ]]; do
   filenumber=$((filenumber+1))
 done
 
-## If making a blank file, calls it 'new'; if there's already a file called 'new', adds bracketed numbers after to differentiate (so you won't overwrite your blank file if you make another one).
+## If making a blank file, calls it 'new'; if there's already a file called 'new-article', adds bracketed numbers after to differentiate (so you won't overwrite your blank file if you make another one).
 if [[ "$filename" == "new" ]]; then
   if [[ -f "new.tex" ]]; then
-    echo "$text" > "$filename($filenumber).tex"
+    cp $templatepath "$filename($filenumber).tex"
 		open "$filename($filenumber).tex"
   else
-    echo "$text" > "$filename.tex"
+    cp $templatepath "$filename.tex"
 		open "$filename.tex"
   fi
 ## Checks if your filename is in use -- returns error if so, otherwise makes it.
@@ -132,7 +34,7 @@ else
   then
     echo "Error: file already exists!"
   else
-    echo "$text" > "$filename.tex"
+    cp $templatepath "$filename.tex"
 		open "$filename.tex"
   fi
 fi
