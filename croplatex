@@ -5,7 +5,6 @@
 ## Also opens them for verification -- remove line 25 if you don't want to see them all.
 ## Tidies up after itself.
 ## Works whether you give it a TeX file with or without the extension.
-
 for filename in "$@"
 do
   if [[ $filename == *.tex ]]
@@ -15,16 +14,15 @@ do
     basename=$filename
   fi
   echo $basename
-  latex "$basename"
-  latex "$basename"
-  dvips "$basename"
-  ps2pdf "$basename.ps"
-
+  # latex "$basename"
+  # latex "$basename"
+  # dvips "$basename"
+  # ps2pdf "$basename.ps"
+  latexmk -pdf "$basename"
   pdfcrop --margins 2 "$basename.pdf"
   mv "$basename-crop.pdf" "$basename.pdf"
   open "$basename.pdf"
 
-  rm $basename.dvi $basename.ps
 done
 
 latexmk -c
