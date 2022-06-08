@@ -5,6 +5,6 @@ A (very) few `bash` and `zsh` scripts, some of which haven't been used for a whi
 
 * `csv2latex` is a find and replace script which turns csv files into LaTeX markup.
 
-* ``pdfcroplatex` takes a`.tex` file as an argument, then compiles it and crops the results using `pdfcrop`. Good for making diagrams. Not tested for a while.
+* `pdfcroplatex` takes a `.tex` file as an argument, then compiles it and crops the results using `pdfcrop`. Good for making diagrams. Not tested for a while.
 
 * `purgelatex` deletes everything LaTeX-related except for `.tex` files.
