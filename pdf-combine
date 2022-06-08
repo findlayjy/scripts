@@ -1,0 +1,20 @@
+#! /bin/zsh
+# Takes one argument, then combines all PDF files in the directory where it is run into a single file with that name.
+# Intended for building books from separate chapters, so it combines the files in order of last modification, oldest first (so you need to download the chapters in order). Perhaps this behaviour could be parametrised in future ...
+
+# list of PDFs ordered by last modification, oldest first
+PDF_ARRAY=(*.pdf(Om))
+
+# Argument passed to pdf-combine is the name of the output file
+OUTPUT_NAME=${1?Missing argument: you need to specify a name for the output file}
+
+echo "Combining the following files:"
+for X in $PDF_ARRAY
+do
+    echo "\t$X"
+done
+
+echo "\nAnd building the following file:\n\t${1%".pdf"}.pdf\n"
+
+# Call PDF Toolkit to combine the files in PDF_ARRAY
+pdftk "${PDF_ARRAY[@]}" cat output "${1%".pdf"}".pdf && echo "Success!"

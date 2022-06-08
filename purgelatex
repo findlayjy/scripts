@@ -2,5 +2,4 @@
 ## Removes everything that LaTeX produces and leaves just the TeX file behind.
 ## Good for testing things.
 
-latexmk -c
-rm *.pdf *.ps *.dvi *.bbl *.aux
+rm *.pdf *.ps *.dvi *.bbl *.aux *.idx *.ind *.lof *.lot *.out *.toc *.acn *.acr *.alg *.glg *.glo *.gls *.ist *.bcf *.fdb_latexmk *.fls *.log *.run.xml *.synctex.gz *.blg 2> /dev/null
